@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Jobs API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://jobs-api-jobs-ck.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginRequest'
+                - example:
+                    email: mohamud@gmail.com
+                    password: '123456'
+            example:
+              email: mohamud@gmail.com
+              password: '123456'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/RegisterRequest'
+                - example:
+                    name: Ahmed
+            example:
+              name: Ahmed
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    get:
+      tags:
+        - Jobs
+      summary: Get All Jobs
+      operationId: GetAllJobs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    post:
+      tags:
+        - Jobs
+      summary: Create Job
+      operationId: CreateJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateJobRequest'
+                - example:
+                    company: Al-Naciim
+                    position: Developer
+            example:
+              company: Al-Naciim
+              position: Developer
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: mohamud@gmail.com
+        password: '123456'
+    CreateJobRequest:
+      title: CreateJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Al-Naciim
+        position: Developer
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Ahmed
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: ''
+  - name: Jobs
+    description: ''
