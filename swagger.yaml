@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-  - url: https://jobs-api-jobs-ck.herokuapp.com/api/v1
+  - url: https://jobs-api-26q5.onrender.com/api/v1
     variables: {}
 paths:
   /auth/login:
@@ -49,9 +49,13 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/RegisterRequest'
                 - example:
-                    name: Ahmed
+                    name: Abdikarin
+                    email: abdikarin@gmail.com
+                    password: secret
             example:
-              name: Ahmed
+              name: Abdikarin
+              email: abdikarin@gmail.com
+              password: secret
         required: true
       responses:
         '200':
@@ -60,19 +64,6 @@ paths:
       deprecated: false
       security: []
   /jobs:
-    get:
-      tags:
-        - Jobs
-      summary: Get All Jobs
-      operationId: GetAllJobs
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security:
-        - bearer: []
     post:
       tags:
         - Jobs
@@ -100,6 +91,80 @@ paths:
       deprecated: false
       security:
         - bearer: []
+    get:
+      tags:
+        - Jobs
+      summary: Get All Jobs
+      operationId: GetAllJobs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+        - Jobs
+      summary: Get Job
+      operationId: GetJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Jobs
+      summary: Update Job
+      operationId: UpdateJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateJobRequest'
+                - example:
+                    company: XYZ
+                    position: XYZ
+            example:
+              company: XYZ
+              position: XYZ
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Jobs
+      summary: Delete Job
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
 components:
   schemas:
     LoginRequest:
@@ -116,6 +181,24 @@ components:
       example:
         email: mohamud@gmail.com
         password: '123456'
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Abdikarin
+        email: abdikarin@gmail.com
+        password: secret
     CreateJobRequest:
       title: CreateJobRequest
       required:
@@ -130,22 +213,28 @@ components:
       example:
         company: Al-Naciim
         position: Developer
-    RegisterRequest:
-      title: RegisterRequest
+    UpdateJobRequest:
+      title: UpdateJobRequest
       required:
-        - name
+        - company
+        - position
       type: object
       properties:
-        name:
+        company:
+          type: string
+        position:
           type: string
       example:
-        name: Ahmed
+        company: XYZ
+        position: XYZ
   securitySchemes:
     bearer:
       type: http
       scheme: bearer
 security: []
 tags:
+  - name: Misc
+    description: ''
   - name: Auth
     description: ''
   - name: Jobs
